@@ -1,0 +1,389 @@
+/* ── RESET & TOKENS ──────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:   #0c0c0c;
+  --sf:   #131313;
+  --sf2:  #1a1a1a;
+  --bd:   #242424;
+  --bd2:  #333;
+  --tx:   #ddd;
+  --mu:   #666;
+  --mu2:  #444;
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'IBM Plex Sans', sans-serif;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--tx);
+  font-family: var(--sans);
+}
+
+/* ── HEADER ──────────────────────────────────────────────────────────────────── */
+#hdr {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 18px;
+  height: 50px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--bd);
+  flex-shrink: 0;
+  z-index: 200;
+  position: relative;
+}
+
+#logo {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.filters { display: flex; gap: 6px; }
+
+select {
+  background: var(--sf2);
+  border: 1px solid var(--bd2);
+  color: var(--tx);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .04em;
+  padding: 5px 22px 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%23666'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+}
+select:focus { border-color: #888; }
+
+#jbtn {
+  margin-left: auto;
+  background: #EE352E;
+  color: #fff;
+  border: none;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: 7px 16px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: opacity .15s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+#jbtn:hover { opacity: .85; }
+
+/* ── LINE FILTER BAR ─────────────────────────────────────────────────────────── */
+#linebar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+  padding: 7px 18px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--bd);
+  flex-shrink: 0;
+}
+
+.lg-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 9px 3px 4px;
+  border: 1px solid var(--bd2);
+  border-radius: 20px;
+  background: none;
+  cursor: pointer;
+  transition: border-color .15s, opacity .15s;
+  white-space: nowrap;
+}
+.lg-btn:hover { border-color: #666; }
+.lg-btn.off   { opacity: .28; }
+
+.lc {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 8.5px;
+  font-weight: 700;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.lg-name {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--tx);
+  margin-left: 2px;
+}
+
+/* ── MAIN LAYOUT ─────────────────────────────────────────────────────────────── */
+#main {
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+
+#map {
+  flex: 1;
+  z-index: 1;
+  min-width: 0;
+  height: 100%;
+}
+
+/* ── JOURNEY MAP BAR ─────────────────────────────────────────────────────────── */
+#jbar {
+  display: none;
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(10, 10, 10, .9);
+  border: 1px solid var(--bd2);
+  border-radius: 5px;
+  padding: 8px 16px;
+  z-index: 400;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--mu);
+  backdrop-filter: blur(8px);
+  letter-spacing: .04em;
+  pointer-events: none;
+  white-space: nowrap;
+}
+#jbar.on { display: block; }
+#jbar em  { font-style: normal; color: #999; }
+
+/* ── SIDEBAR ─────────────────────────────────────────────────────────────────── */
+#sidebar {
+  width: 360px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--sf);
+  border-left: 1px solid var(--bd);
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+}
+
+/* ── EMPTY STATE ─────────────────────────────────────────────────────────────── */
+#empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 28px;
+  text-align: center;
+}
+.eg { font-size: 26px; margin-bottom: 16px; opacity: .18; font-family: var(--mono); }
+.eh { font-family: var(--mono); font-size: 9.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--mu); margin-bottom: 10px; }
+.eb { font-size: 12.5px; color: var(--mu2); line-height: 1.7; }
+.eb em { color: #EE352E; font-style: normal; }
+
+/* ── STATION PANEL ───────────────────────────────────────────────────────────── */
+#panel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--sf);
+  transform: translateX(100%);
+  transition: transform .38s cubic-bezier(.25, .46, .45, .94);
+}
+#panel.open { transform: translateX(0); }
+
+.ph {
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid var(--bd);
+  flex-shrink: 0;
+  position: relative;
+}
+.ph-name {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  line-height: 1.35;
+  color: var(--tx);
+  padding-right: 28px;
+}
+.ph-badges { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; }
+
+.bl {
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+}
+.bg {
+  font-family: var(--mono);
+  font-size: 8.5px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, .13);
+  padding: 2px 6px;
+  border-radius: 2px;
+  color: #999;
+}
+.be { font-family: var(--mono); font-size: 8.5px; letter-spacing: .05em; color: var(--mu); }
+
+.xbtn {
+  position: absolute;
+  top: 13px;
+  right: 14px;
+  background: none;
+  border: none;
+  color: var(--mu);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 2px;
+  transition: color .15s;
+  line-height: 1;
+}
+.xbtn:hover { color: var(--tx); }
+
+/* ── PANEL BODY ──────────────────────────────────────────────────────────────── */
+.pb {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px 20px;
+}
+.pb::-webkit-scrollbar       { width: 3px; }
+.pb::-webkit-scrollbar-thumb { background: var(--bd2); }
+.pb::-webkit-scrollbar-track { background: transparent; }
+
+/* Section label */
+.sl {
+  font-family: var(--mono);
+  font-size: 7.5px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--mu);
+  margin-bottom: 6px;
+  margin-top: 16px;
+}
+.sl:first-child { margin-top: 0; }
+
+/* Body text */
+.st { font-size: 12.5px; line-height: 1.78; color: #b0b0b0; }
+
+/* Featured track */
+.track-meta  { margin-bottom: 10px; }
+.track-title {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--tx);
+  display: block;
+  margin-bottom: 3px;
+}
+.track-credit { font-family: var(--mono); font-size: 10px; color: var(--mu); letter-spacing: .04em; }
+.track-credit strong { color: #bbb; font-weight: 500; }
+
+/* Spotify embed */
+.sw { margin-top: 6px; border-radius: 6px; overflow: hidden; }
+.sw iframe { border: none; width: 100%; display: block; border-radius: 6px; }
+
+/* Artist chips */
+.ats { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 2px; }
+.ac {
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 3px 8px;
+  background: rgba(255, 255, 255, .04);
+  border: 1px solid rgba(255, 255, 255, .09);
+  color: #999;
+  border-radius: 2px;
+}
+
+/* ── JOURNEY CONTROLS ────────────────────────────────────────────────────────── */
+#jc {
+  padding: 10px 20px;
+  border-top: 1px solid var(--bd);
+  flex-shrink: 0;
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+}
+#jc.on { display: flex; }
+
+.pbar { height: 2px; background: var(--bd2); border-radius: 1px; overflow: hidden; }
+.pfill { height: 100%; background: #EE352E; border-radius: 1px; transition: width .5s linear; width: 0%; }
+
+.jrow { display: flex; align-items: center; gap: 6px; }
+.jb {
+  background: none;
+  border: 1px solid var(--bd2);
+  color: var(--tx);
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 4px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: border-color .15s, color .15s;
+}
+.jb:hover { border-color: #888; color: #fff; }
+.jplay { background: #EE352E; border-color: #EE352E; color: #fff; padding: 4px 12px; }
+.jplay:hover { opacity: .85; color: #fff !important; border-color: #EE352E !important; }
+.jlbl { font-family: var(--mono); font-size: 9px; letter-spacing: .1em; color: var(--mu); margin-left: auto; }
+
+/* ── LEAFLET OVERRIDES ───────────────────────────────────────────────────────── */
+.leaflet-container                { background: #111; }
+.leaflet-control-zoom             { border: 1px solid var(--bd2) !important; border-radius: 3px !important; overflow: hidden; }
+.leaflet-control-zoom a           { background: var(--sf) !important; color: var(--tx) !important; border: none !important; border-bottom: 1px solid var(--bd2) !important; }
+.leaflet-control-zoom a:hover     { background: var(--sf2) !important; color: #fff !important; }
+.leaflet-control-zoom-out         { border-bottom: none !important; }
+.leaflet-attribution-flag         { display: none !important; }
+.leaflet-control-attribution      { background: rgba(10,10,10,.7) !important; color: var(--mu2) !important; font-size: 9px !important; }
+.leaflet-control-attribution a    { color: var(--mu) !important; }
+
+/* ── STATION DOTS ────────────────────────────────────────────────────────────── */
+.sdot {
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform .18s, box-shadow .18s, opacity .2s;
+}
+.sdot:hover { transform: scale(1.5) !important; }
+.sdot.dim   { opacity: .13 !important; transform: scale(1) !important; box-shadow: none !important; }
+
+/* ── TOOLTIP ─────────────────────────────────────────────────────────────────── */
+.leaflet-tooltip {
+  background: var(--bg) !important;
+  border: 1px solid var(--bd2) !important;
+  color: var(--tx) !important;
+  font-family: var(--mono) !important;
+  font-size: 9.5px !important;
+  letter-spacing: .04em;
+  border-radius: 3px !important;
+  padding: 4px 8px !important;
+  box-shadow: none !important;
+}
+.leaflet-tooltip::before { display: none !important; }

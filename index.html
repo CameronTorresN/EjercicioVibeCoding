@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stations — A musical map of the NYC subway</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div id="hdr">
+    <div id="logo">Stations</div>
+    <div class="filters">
+      <select id="gf">
+        <option value="">All genres</option>
+        <option>Hip-Hop</option>
+        <option>Jazz</option>
+        <option>Latin</option>
+        <option>Salsa</option>
+        <option>Folk</option>
+        <option>Folk-Rock</option>
+        <option>Indie</option>
+        <option>Indie Rock</option>
+        <option>Disco</option>
+        <option>Reggae</option>
+        <option>Gospel</option>
+        <option>Classical</option>
+        <option>Brass</option>
+        <option>Electronic</option>
+        <option>Punk</option>
+        <option>Rock</option>
+        <option>World Music</option>
+        <option>Blues</option>
+        <option>Soul</option>
+        <option>Heavy Metal</option>
+        <option>Grunge</option>
+        <option>Alternative</option>
+        <option>Big Band</option>
+        <option>Musical Theater</option>
+        <option>Psychedelic Rock</option>
+        <option>Electro Punk</option>
+      </select>
+      <select id="ef">
+        <option value="">All eras</option>
+        <option>Pre-1950</option>
+        <option>1950s–60s</option>
+        <option>1970s–80s</option>
+        <option>1990s–2000s</option>
+        <option>Today</option>
+      </select>
+    </div>
+    <button id="jbtn">▶ Start Journey</button>
+  </div>
+
+  <!-- LINE FILTER BAR (built by app.js) -->
+  <div id="linebar"></div>
+
+  <!-- MAIN -->
+  <div id="main">
+    <div id="map"></div>
+    <div id="jbar"></div>
+
+    <div id="sidebar">
+
+      <!-- Empty state -->
+      <div id="empty">
+        <div class="eg">♪</div>
+        <div class="eh">Pick a station</div>
+        <div class="eb">
+          Tap any stop to hear what its neighborhood sounds like —
+          or hit <em>Start Journey</em> to ride the whole system.
+        </div>
+      </div>
+
+      <!-- Station panel -->
+      <div id="panel">
+        <div class="ph">
+          <button class="xbtn" id="xbtn">×</button>
+          <div class="ph-name" id="pname"></div>
+          <div class="ph-badges" id="pbadges"></div>
+        </div>
+        <div class="pb" id="pbody"></div>
+        <div id="jc">
+          <div class="pbar"><div class="pfill" id="pfill"></div></div>
+          <div class="jrow">
+            <button class="jb" id="jprev">← Prev</button>
+            <button class="jb jplay" id="jplay">⏸ Pause</button>
+            <button class="jb" id="jnext">Next →</button>
+            <span class="jlbl" id="jlbl"></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
